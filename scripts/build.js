@@ -11,6 +11,7 @@ if (!fs.existsSync('dist')) {
 let builds = require('./config').getAllBuilds()
 
 // filter builds via command line arg
+/* 通过命令行参数对构建配置过滤，这样就可以构建出不同用途的Vue.js了 */
 if (process.argv[2]) {
   const filters = process.argv[2].split(',')
   builds = builds.filter(b => {
