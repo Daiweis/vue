@@ -67,6 +67,11 @@ function createKeyToOldIdx (children, beginIdx, endIdx) {
   return map
 }
 
+/* 
+  差异化部分只需要通过参数来区别，这⾥⽤到了⼀个函数柯⾥化的技巧，通过
+createPatchFunction 把差异化参数提前固化，这样不⽤每次调⽤ patch 的时候都传递
+nodeOps 和 modules 了，这种编程技巧也⾮常值得学习。
+*/
 export function createPatchFunction (backend) {
   let i, j
   const cbs = {}

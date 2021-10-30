@@ -56,6 +56,11 @@ export function initLifecycle (vm: Component) {
 }
 
 export function lifecycleMixin (Vue: Class<Component>) {
+  /* 
+    1、被调⽤的时机有 2 个，⼀个是⾸次渲染，⼀个是数据更新的时候
+    2、_update 的核⼼就是调⽤ vm.__patch__ ⽅法，
+    3、在服务端渲染中，没有真实的浏览器 DOM 环境，所以不需要把 VNode 最终转换成 DOM，因此是⼀个空函数
+  */
   Vue.prototype._update = function (vnode: VNode, hydrating?: boolean) {
     const vm: Component = this
     const prevEl = vm.$el
@@ -138,7 +143,11 @@ export function lifecycleMixin (Vue: Class<Component>) {
   }
 }
 
-/* 它完成了整个渲染工作， 两个最核心的方法： vm._render 和 vm._update */
+/* 
+  它完成了整个渲染工作， 两个最核心的方法： vm._render 和 vm._update
+      vm._render: 创建 VNode
+      vm._update: 将 VNode 渲染成一个真实的 DOM
+*/
 export function mountComponent (
   vm: Component,
   el: ?Element,
