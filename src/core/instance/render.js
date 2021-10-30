@@ -16,6 +16,8 @@ import VNode, { createEmptyVNode } from '../vdom/vnode'
 
 import { isUpdatingChildComponent } from './lifecycle'
 
+/* 之所以刚接触如此的吃力，因为对于vue的设计思想，暂时无法准确把握 ， Vue
+2.0 相⽐ Vue 1.0 最⼤的升级就是利⽤了 Virtual DOM。*/
 export function initRender (vm: Component) {
   vm._vnode = null // the root of the child tree
   vm._staticTrees = null // v-once cached trees

@@ -17,7 +17,14 @@ const idToTemplate = cached((id) => {
   return el && el.innerHTML;
 });
 
-/* 这段代码⾸先缓存了原型上的 $mount ⽅法，再重新定义该⽅法 */
+/* 
+  1、这段代码⾸先缓存了原型上的 $mount ⽅法，再重新定义该⽅法
+  2、$mount ⽅法⽀持传⼊ 2 个参数，第⼀个是 el ，它表⽰挂载的元素，可以是字符串，也可以是
+DOM 对象，如果是字符串在浏览器环境下会调⽤ query ⽅法转换成 DOM 对象的。第⼆个参数是和
+服务端渲染相关，在浏览器环境下我们不需要传第⼆个参数。
+
+
+*/
 const mount = Vue.prototype.$mount;
 Vue.prototype.$mount = function (
   el?: string | Element,

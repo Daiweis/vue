@@ -44,6 +44,7 @@ export function createElement (
   return _createElement(context, tag, data, children, normalizationType)
 }
 
+/* normalizationType, 规范化 children， 经过对 children 的规范化， children 变成了⼀个类型为 VNode 的 Array。 */
 export function _createElement (
   context: Component,
   tag?: string | Class<Component> | Function | Object,

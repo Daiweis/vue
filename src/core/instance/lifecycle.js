@@ -138,6 +138,7 @@ export function lifecycleMixin (Vue: Class<Component>) {
   }
 }
 
+/* 它完成了整个渲染工作， 两个最核心的方法： vm._render 和 vm._update */
 export function mountComponent (
   vm: Component,
   el: ?Element,
@@ -176,17 +177,20 @@ export function mountComponent (
       const endTag = `vue-perf-end:${id}`
 
       mark(startTag)
+      // mountComponent 核心作用调用 vm._render 方法先生成虚拟 Node
       const vnode = vm._render()
       mark(endTag)
       measure(`vue ${name} render`, startTag, endTag)
 
       mark(startTag)
+      // vm._update 更新 DOM
       vm._update(vnode, hydrating)
       mark(endTag)
       measure(`vue ${name} patch`, startTag, endTag)
     }
   } else {
     updateComponent = () => {
+      // vm._update 更新 DOM
       vm._update(vm._render(), hydrating)
     }
   }
