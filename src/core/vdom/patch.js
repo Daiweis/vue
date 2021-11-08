@@ -578,6 +578,11 @@ export function createPatchFunction (backend) {
     }
   }
 
+  /* 组件的 VNode patch 到 DOM 后，会执⾏ invokeInsertHook 函数 
+     把insertedVnodeQueue ⾥保存的钩⼦函数依次执⾏⼀遍，
+     该函数会执⾏ insert 这个钩⼦函数，对于组件⽽⾔， insert 钩⼦函数的定义在
+src/core/vdom/create-component.js 中的 componentVNodeHooks 中
+     */
   function invokeInsertHook (vnode, queue, initial) {
     // delay insert hooks for component root nodes, invoke them after the
     // element is really inserted

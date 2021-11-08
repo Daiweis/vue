@@ -26,6 +26,11 @@ import {
   renderRecyclableComponentTemplate,
 } from "weex/runtime/recycle-list/render-component-template";
 
+/* 
+  每个⼦组件都是在这个钩⼦函数中执⾏ mouted 钩⼦函数，并且我们之前分析
+过， insertedVnodeQueue 的添加顺序是先⼦后⽗，所以对于同步渲染的⼦组件⽽⾔， mounted 钩
+⼦函数的执⾏顺序也是先⼦后⽗。
+*/
 // inline hooks to be invoked on component VNodes during patch
 const componentVNodeHooks = {
   init(vnode: VNodeWithData, hydrating: boolean): ?boolean {

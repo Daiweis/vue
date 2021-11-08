@@ -54,8 +54,12 @@ export function initMixin (Vue: Class<Component>) {
     initRender(vm)
     callHook(vm, 'beforeCreate')
     initInjections(vm) // resolve injections before data/props
+    // 初始化 props 、 data 、 methods 、 watch 、 computed 等属性，显然 beforeCreate 的钩⼦函数中就不能获取到 props 、 data 中定义的值，也不能调⽤ methods 中定义的函数。
     initState(vm)
     initProvide(vm) // resolve provide after data/props
+    /* 在这俩个钩⼦函数执⾏的时候，并没有渲染 DOM，所以我们也不能够访问 DOM，⼀般来说，如果组
+件在加载的时候需要和后端有交互，放在这俩个钩⼦函数执⾏都可以，如果是需要访问
+props 、 data 等数据的话，就需要使⽤ created 钩⼦函数。 */
     callHook(vm, 'created')
 
     /* istanbul ignore if */

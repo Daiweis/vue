@@ -9,8 +9,12 @@ let uid = 0
 /**
  * A dep is an observable that can have multiple
  * directives subscribing to it.
+ * 
+ * Dep 是整个 getter 依赖收集的核心
  */
 export default class Dep {
+  // 这是一个全局唯一 Watcher，这是一个非常巧妙的设计，因为在同一时间只能有一个全局的Watcher被计算
+  // Dep 实际上就是对 Watcher 的一种管理，Dep 脱离 Watcher 单独存在是没有任何意义的
   static target: ?Watcher;
   id: number;
   subs: Array<Watcher>;

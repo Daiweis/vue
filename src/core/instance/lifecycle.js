@@ -147,6 +147,10 @@ export function lifecycleMixin (Vue: Class<Component>) {
   它完成了整个渲染工作， 两个最核心的方法： vm._render 和 vm._update
       vm._render: 创建 VNode
       vm._update: 将 VNode 渲染成一个真实的 DOM
+
+  在执⾏ vm._render() 函数渲染 VNode 之前，执⾏了 beforeMount 钩⼦函数，在执⾏完
+vm._update() 把 VNode patch 到真实 DOM 后，执⾏ mouted 钩⼦。
+
 */
 export function mountComponent (
   vm: Component,
@@ -218,6 +222,10 @@ export function mountComponent (
 
   // manually mounted instance, call mounted on self
   // mounted is called for render-created child components in its inserted hook
+  /* 
+    vm.$vnode 如果为 null ，则表明这不是⼀次组件的初始化过程，⽽是
+  我们通过外部 new Vue 初始化过程。
+  */
   if (vm.$vnode == null) {
     vm._isMounted = true
     callHook(vm, 'mounted')
@@ -332,6 +340,7 @@ export function deactivateChildComponent (vm: Component, direct?: boolean) {
   }
 }
 
+/* 源码中最终执⾏⽣命周期的函数都是调⽤ callHook ⽅法 */
 export function callHook (vm: Component, hook: string) {
   // #7573 disable dep collection when invoking lifecycle hooks
   pushTarget()

@@ -22,6 +22,8 @@ let uid = 0
  * A watcher parses an expression, collects dependencies,
  * and fires callback when the expression value changes.
  * This is used for both the $watch() api and directives.
+ * 
+ * Dep 和 Watcher 是一个非常经典的观察者设计模式
  */
 export default class Watcher {
   vm: Component;
@@ -68,6 +70,7 @@ export default class Watcher {
     this.id = ++uid // uid for batching
     this.active = true
     this.dirty = this.lazy // for lazy watchers
+    // 为什么会新建两个 dep 数组？
     this.deps = []
     this.newDeps = []
     this.depIds = new Set()
