@@ -55,7 +55,9 @@ export function initMixin (Vue: Class<Component>) {
     // 执行生命周期钩子函数 beforeCreate
     callHook(vm, 'beforeCreate')
     initInjections(vm) // resolve injections before data/props
-    // 初始化 props 、 data 、 methods 、 watch 、 computed 等属性，显然 beforeCreate 的钩⼦函数中就不能获取到 props 、 data 中定义的值，也不能调⽤ methods 中定义的函数。
+    // 初始化 props 、 data 、 methods 、 watch 、 computed 等属性，
+    //显然 beforeCreate 的钩⼦函数中就不能获取到 props 、 data 中定义的值，也不能调⽤ methods 中定义的函数。
+    // 但是在created方法中就可以，所以网络请求数据可以放在created方法中进行
     initState(vm)
     initProvide(vm) // resolve provide after data/props
     /* 在这俩个钩⼦函数执⾏的时候，并没有渲染 DOM，所以我们也不能够访问 DOM，⼀般来说，如果组

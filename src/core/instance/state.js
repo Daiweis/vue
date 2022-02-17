@@ -66,6 +66,7 @@ function initProps (vm: Component, propsOptions: Object) {
   const props = vm._props = {}
   // cache prop keys so that future props updates can iterate using Array
   // instead of dynamic object key enumeration.
+  // keys，在 initProps中暂时没发现具体使用
   const keys = vm.$options._propKeys = []
   const isRoot = !vm.$parent
   // root instance props should be converted
@@ -101,8 +102,7 @@ function initProps (vm: Component, propsOptions: Object) {
       defineReactive 函数最开始初始化 Dep 对象的实例，接着拿到 obj 的属性描述符，然后对⼦对
 象递归调⽤ observe ⽅法，这样就保证了⽆论 obj 的结构多复杂，它的所有⼦属性也能变成响应
 式的对象，这样我们访问或修改 obj 中⼀个嵌套较深的属性，也能触发 getter 和 setter。最后利⽤
-Object.defineProperty 去给 obj 的属性 key 添加 getter 和 setter。⽽关于 getter 和 setter 的具
-体实现，我们会在之后介绍。
+Object.defineProperty 去给 obj 的属性 key 添加 getter 和 setter。
       */
       defineReactive(props, key, value)
     }
