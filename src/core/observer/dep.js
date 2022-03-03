@@ -33,6 +33,7 @@ export default class Dep {
   }
 
   depend () {
+    // Dep.target ? 在哪里定义的呢，为啥为 true
     if (Dep.target) {
       Dep.target.addDep(this)
     }
