@@ -144,13 +144,13 @@ export function lifecycleMixin (Vue: Class<Component>) {
 }
 
 /* 
-  它完成了整个渲染工作， 两个最核心的方法： vm._render 和 vm._update
-      vm._render: 创建 VNode
-      vm._update: 将 VNode 渲染成一个真实的 DOM
+  它完成了整个渲染工作， 
+  两个最核心的方法： vm._render 和 vm._update
+  vm._render: 创建 VNode
+  vm._update: 将 VNode 渲染成一个真实的 DOM
 
   在执⾏ vm._render() 函数渲染 VNode 之前，执⾏了 beforeMount 钩⼦函数，在执⾏完
-vm._update() 把 VNode patch 到真实 DOM 后，执⾏ mouted 钩⼦。
-
+  vm._update() 把 VNode patch 到真实 DOM 后，执⾏ mouted 钩⼦。
 */
 export function mountComponent (
   vm: Component,
@@ -208,6 +208,11 @@ export function mountComponent (
     }
   }
 
+  /**
+   * 
+   * Watcher 在这⾥起到两个作⽤，⼀个是初始化的时候会执⾏回调函数，另⼀个是当 vm 实例中的监测
+     的数据发⽣变化的时候执⾏回调函数
+   */
   // we set this to vm._watcher inside the watcher's constructor
   // since the watcher's initial patch may call $forceUpdate (e.g. inside child
   // component's mounted hook), which relies on vm._watcher being already defined
@@ -224,7 +229,7 @@ export function mountComponent (
   // mounted is called for render-created child components in its inserted hook
   /* 
     vm.$vnode 如果为 null ，则表明这不是⼀次组件的初始化过程，⽽是
-  我们通过外部 new Vue 初始化过程。
+    我们通过外部 new Vue 初始化过程。
   */
   if (vm.$vnode == null) {
     vm._isMounted = true

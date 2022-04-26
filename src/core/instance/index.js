@@ -14,6 +14,7 @@ function Vue (options) {
   this._init(options)
 }
 
+// 把Vue当作参数传递，它的功能都是给Vue的 prototype 上扩展一些方法，这样做相当于分模块进行处理，方便的代码的维护和管理
 initMixin(Vue)
 stateMixin(Vue)
 eventsMixin(Vue)

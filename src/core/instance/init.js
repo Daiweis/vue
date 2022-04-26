@@ -63,7 +63,7 @@ export function initMixin (Vue: Class<Component>) {
     /* 在这俩个钩⼦函数执⾏的时候，并没有渲染 DOM，所以我们也不能够访问 DOM，⼀般来说，如果组
     件在加载的时候需要和后端有交互，放在这俩个钩⼦函数执⾏都可以，如果是需要访问
     props 、 data 等数据的话，就需要使⽤ created 钩⼦函数。 */
-    // 执行生命周期钩子函数 beforeCreate
+    // 执行生命周期钩子函数 created
     callHook(vm, 'created')
 
     /* istanbul ignore if */
@@ -72,7 +72,7 @@ export function initMixin (Vue: Class<Component>) {
       mark(endTag)
       measure(`vue ${vm._name} init`, startTag, endTag)
     }
-
+    // 最终会执行 $mount  ---> mountComponent --->  _render()  --->  _update()
     if (vm.$options.el) {
       vm.$mount(vm.$options.el)
     }
