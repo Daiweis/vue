@@ -73,6 +73,7 @@ export function initMixin (Vue: Class<Component>) {
       measure(`vue ${vm._name} init`, startTag, endTag)
     }
     // 最终会执行 $mount  ---> mountComponent --->  _render()  --->  _update()
+    // 如果没有 el 会怎样？ $options 中也不一定会有 el 啊，如果没有 el，那之前的操作是不是就白做了，还是说之前的操作很简单呢
     if (vm.$options.el) {
       vm.$mount(vm.$options.el)
     }
