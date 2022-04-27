@@ -69,8 +69,12 @@ function createKeyToOldIdx (children, beginIdx, endIdx) {
 
 /* 
   差异化部分只需要通过参数来区别，这⾥⽤到了⼀个函数柯⾥化的技巧，通过
-createPatchFunction 把差异化参数提前固化，这样不⽤每次调⽤ patch 的时候都传递
-nodeOps 和 modules 了，这种编程技巧也⾮常值得学习。
+  createPatchFunction 把差异化参数提前固化，这样不⽤每次调⽤ patch 的时候都传递
+  nodeOps 和 modules 了，这种编程技巧也⾮常值得学习。
+
+  这⾥传⼊了⼀个对象，包含 nodeOps
+  参数和 modules 参数。其中， nodeOps 封装了⼀系列 DOM 操作的⽅法， modules 定义了⼀些模
+  块的钩⼦函数的实现
 */
 export function createPatchFunction (backend) {
   let i, j
@@ -146,6 +150,7 @@ export function createPatchFunction (backend) {
     }
 
     vnode.isRootInsert = !nested // for transition enter check
+    //  createComponent ⽅法⽬的是尝试创建⼦组件
     if (createComponent(vnode, insertedVnodeQueue, parentElm, refElm)) {
       return
     }
@@ -168,6 +173,7 @@ export function createPatchFunction (backend) {
         }
       }
 
+      //  创建真实 DOM 
       vnode.elm = vnode.ns
         ? nodeOps.createElementNS(vnode.ns, tag)
         : nodeOps.createElement(tag, vnode)
@@ -581,7 +587,7 @@ export function createPatchFunction (backend) {
   /* 组件的 VNode patch 到 DOM 后，会执⾏ invokeInsertHook 函数 
      把insertedVnodeQueue ⾥保存的钩⼦函数依次执⾏⼀遍，
      该函数会执⾏ insert 这个钩⼦函数，对于组件⽽⾔， insert 钩⼦函数的定义在
-src/core/vdom/create-component.js 中的 componentVNodeHooks 中
+     src/core/vdom/create-component.js 中的 componentVNodeHooks 中
      */
   function invokeInsertHook (vnode, queue, initial) {
     // delay insert hooks for component root nodes, invoke them after the
@@ -748,6 +754,7 @@ src/core/vdom/create-component.js 中的 componentVNodeHooks 中
               )
             }
           }
+          // 通过 emptyNodeAt ⽅法把 oldVnode 转换成 VNode 对象
           // either not server-rendered, or hydration failed.
           // create an empty node and replace it
           oldVnode = emptyNodeAt(oldVnode)
@@ -757,6 +764,13 @@ src/core/vdom/create-component.js 中的 componentVNodeHooks 中
         const oldElm = oldVnode.elm
         const parentElm = nodeOps.parentNode(oldElm)
 
+        /** 
+         * createElm 的作⽤是通过虚拟节点创建真实的 DOM 并插⼊到它的⽗节点中。 我们来看⼀下它的⼀
+          些关键逻辑， createComponent ⽅法⽬的是尝试创建⼦组件，这个逻辑在之后组件的章节会详细介
+          绍，在当前这个 case 下它的返回值为 false；接下来判断 vnode 是否包含 tag，如果包含，先简单对
+          tag 的合法性在⾮⽣产环境下做校验，看是否是⼀个合法标签；然后再去调⽤平台 DOM 的操作去创建
+          ⼀个占位符元素
+        */
         // create new node
         createElm(
           vnode,

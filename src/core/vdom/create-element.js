@@ -89,10 +89,31 @@ export function _createElement (
     children.length = 0
   }
   if (normalizationType === ALWAYS_NORMALIZE) {
+    /**
+     * normalizeChildren ⽅法的调⽤场景有 2 种，⼀个场景是 render 函数是⽤户⼿写的，当
+      children 只有⼀个节点的时候，Vue.js 从接⼝层⾯允许⽤户把 children 写成基础类型⽤来创建单
+      个简单的⽂本节点，这种情况会调⽤ createTextVNode 创建⼀个⽂本节点的 VNode；另⼀个场景是
+      当编译 slot 、 v-for 的时候会产⽣嵌套数组的情况
+     */
     children = normalizeChildren(children)
   } else if (normalizationType === SIMPLE_NORMALIZE) {
+    /**
+     * simpleNormalizeChildren ⽅法调⽤场景是 render 函数当函数是编译⽣成的。理论上编译⽣成的
+      children 都已经是 VNode 类型的，但这⾥有⼀个例外，就是 functional component 函数式组件
+      返回的是⼀个数组⽽不是⼀个根节点，所以会通过 Array.prototype.concat ⽅法把整个
+      children 数组打平，让它的深度只有⼀层。
+     */
     children = simpleNormalizeChildren(children)
   }
+  // 根据不同的类型初始化VNode，createComponent 创建组件
+  /**
+   * 这⾥先对 tag 做判断，如果是 string 类型，则接着判断如果是内置的⼀些节点，则直接创建⼀个
+    普通 VNode，如果是为已注册的组件名，则通过 createComponent 创建⼀个组件类型的 VNode，否
+    则创建⼀个未知的标签的 VNode。 如果是 tag ⼀个 Component 类型，则直接调⽤
+    createComponent 创建⼀个组件类型的 VNode 节点。对于 createComponent 创建组件类型的
+    VNode 的过程，我们之后会去介绍，本质上它还是返回了⼀个 VNode。
+
+   */
   let vnode, ns
   if (typeof tag === 'string') {
     let Ctor

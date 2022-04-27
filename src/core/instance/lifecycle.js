@@ -204,6 +204,11 @@ export function mountComponent (
   } else {
     updateComponent = () => {
       // vm._update 更新 DOM
+      /**
+       * Vue 的 _update 是实例的⼀个私有⽅法，它被调⽤的时机有 2 个，⼀个是⾸次渲染，⼀个是数据更
+        新的时候；由于我们这⼀章节只分析⾸次渲染部分，数据更新部分会在之后分析响应式原理的时候涉
+        及。 _update ⽅法的作⽤是把 VNode 渲染成真实的 DOM
+       */
       vm._update(vm._render(), hydrating)
     }
   }
