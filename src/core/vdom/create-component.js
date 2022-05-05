@@ -28,8 +28,8 @@ import {
 
 /* 
   每个⼦组件都是在这个钩⼦函数中执⾏ mouted 钩⼦函数，并且我们之前分析
-过， insertedVnodeQueue 的添加顺序是先⼦后⽗，所以对于同步渲染的⼦组件⽽⾔， mounted 钩
-⼦函数的执⾏顺序也是先⼦后⽗。
+  过， insertedVnodeQueue 的添加顺序是先⼦后⽗，所以对于同步渲染的⼦组件⽽⾔， mounted 钩
+  ⼦函数的执⾏顺序也是先⼦后⽗。
 */
 // inline hooks to be invoked on component VNodes during patch
 const componentVNodeHooks = {
@@ -117,7 +117,7 @@ export function createComponent(
   }
 
   /* 
-  baseCtor 实际上就是 Vue
+    baseCtor 实际上就是 Vue
     在 src/core/global-api/index.js 中的 initGlobalAPI 函数有这么⼀段逻辑：
     Vue.options._base = Vue
   
@@ -125,11 +125,11 @@ export function createComponent(
   const baseCtor = context.$options._base;
 
   /* 
-  构造⼦类构造函数
+    构造⼦类构造函数
     Vue.extend 的作⽤就是构造⼀个 Vue 的⼦类，它使⽤⼀种⾮常经典的原型继承的⽅式把⼀个纯对
-象转换⼀个继承于 Vue 的构造器 Sub 并返回，然后对 Sub 这个对象本⾝扩展了⼀些属性，如扩
-展 options 、添加全局 API 等；并且对配置中的 props 和 computed 做了初始化⼯作；最后对于
-这个 Sub 构造函数做了缓存，避免多次执⾏ Vue.extend 的时候对同⼀个⼦组件重复构造。  
+    象转换⼀个继承于 Vue 的构造器 Sub 并返回，然后对 Sub 这个对象本⾝扩展了⼀些属性，如扩
+    展 options 、添加全局 API 等；并且对配置中的 props 和 computed 做了初始化⼯作；最后对于
+    这个 Sub 构造函数做了缓存，避免多次执⾏ Vue.extend 的时候对同⼀个⼦组件重复构造。  
   */
   // plain options object: turn it into a constructor
   if (isObject(Ctor)) {
